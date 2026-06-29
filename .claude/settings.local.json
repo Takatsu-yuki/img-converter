@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm -v)",
+      "Bash(npm create *)",
+      "Bash(cd \"/Users/yumiri/Desktop/webデザイン/練習/claude\" && npm create vite@latest img-converter-tmp -- --template react-ts 2>&1)",
+      "Bash(cp -r \"/Users/yumiri/Desktop/webデザイン/練習/claude/img-converter-tmp/.\" \"/Users/yumiri/Desktop/webデザイン/練習/claude/img-converter/\")",
+      "Bash(rm -rf \"/Users/yumiri/Desktop/webデザイン/練習/claude/img-converter-tmp\")",
+      "Bash(npm install *)"
+    ]
+  }
+}
