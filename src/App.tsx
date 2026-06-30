@@ -12,6 +12,7 @@ function App() {
   const [isDragging, setIsDragging] = useState(false);
   const [images, setImages] = useState<ImageItem[]>([]);
   const [quality, setQuality] = useState(0.9);
+  const [qualityInput, setQualityInput] = useState("90");
 
   const addFiles = (files: FileList) => {
     const imageFiles = Array.from(files).filter((f) =>
@@ -117,16 +118,46 @@ function App() {
       {images.length > 0 && (
         <>
           <div className="quality-row">
-            <label>品質: {Math.round(quality * 100)}%</label>
+            <label>品質:</label>
             <input
               type="range"
-              min={0.1}
-              max={1}
-              step={0.05}
-              value={quality}
-              onChange={(e) => setQuality(Number(e.target.value))}
+              min={1}
+              max={100}
+              step={1}
+              value={Math.round(quality * 100)}
+              onChange={(e) => {
+                const v = Number(e.target.value);
+                setQuality(v / 100);
+                setQualityInput(String(v));
+              }}
             />
+            <input
+              className="quality-number"
+              type="number"
+              min={1}
+              max={100}
+              value={qualityInput}
+              onChange={(e) => setQualityInput(e.target.value)}
+              onBlur={() => {
+                const v = Math.min(100, Math.max(1, Number(qualityInput) || 90));
+                setQuality(v / 100);
+                setQualityInput(String(v));
+              }}
+            />
+            <span>%</span>
           </div>
+
+          {!allConverted && (
+            <button onClick={handleConvertAll}>
+              まとめてWebPに変換する（{images.length}枚）
+            </button>
+          )}
+
+          {allConverted && (
+            <button onClick={handleSave}>
+              {window.electronAPI ? "フォルダを選んで保存" : "ZIPでダウンロード"}
+            </button>
+          )}
 
           <div className="image-list">
             {images.map((item, i) => (
@@ -156,18 +187,6 @@ function App() {
               </div>
             ))}
           </div>
-
-          {!allConverted && (
-            <button onClick={handleConvertAll}>
-              まとめてWebPに変換する（{images.length}枚）
-            </button>
-          )}
-
-          {allConverted && (
-            <button onClick={handleSave}>
-              {window.electronAPI ? "フォルダを選んで保存" : "ZIPでダウンロード"}
-            </button>
-          )}
         </>
       )}
     </div>
