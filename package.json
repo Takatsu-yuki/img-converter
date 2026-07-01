@@ -15,7 +15,10 @@
     "appId": "com.company.img-converter",
     "productName": "画像変換ツール",
     "mac": {
-      "target": "dmg"
+      "target": {
+        "target": "dmg",
+        "arch": ["universal"]
+      }
     },
     "files": [
       "dist/**/*",
