@@ -28,6 +28,9 @@
       ],
       "window": { "width": 540, "height": 380 }
     },
+    "directories": {
+      "output": "release"
+    },
     "files": [
       "dist/**/*",
       "dist-electron/**/*"
